@@ -245,3 +245,48 @@ bónusz 5. (6 pont)
 */
 
 SELECT country.Code, IsOfficial, COUNT(*) FROM country INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.Code GROUP BY country.Code, IsOfficial;
+
+
+
+2. feladat: 
+create table users (
+	id int AUTO_INCREMENT,
+    name varchar(255) not null,
+    email varchar(255) not null,
+    password varchar(255) not null,
+    active boolean default true,
+    registration_date datetime default now(),
+    primary key (id)
+
+);
+
+
+create table messages (
+	id int auto_increment,
+    sender int not null,
+    receiver int not null,
+    message text not null,
+    message_date datetime default now(),
+    reply int null,
+    primary key (id)
+,
+    foreign key (sender) references users(id)
+,
+    foreign key (receiver) references users(id)
+,
+    foreign key (reply) references messages(id)
+
+)
+
+
+insert into messages (sender, receiver, message, reply) values (1, 2, "Szia!", null);
+insert into messages (sender, receiver, message, reply) values (2, 1, "Szia Mia!", 1);
+select * from messages;
+
+insert into users (name, email, password) values ("Katinka", "mark@v.hu", "qwrty");
+insert into users (name, email, password) values ("Lala", "lala@v.hu", "qwrty2");
+insert into users (name, email, password) values ("Joci", "joci@v.hu", "qwertzu");
+
+
+
+
