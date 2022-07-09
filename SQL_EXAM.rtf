@@ -1,0 +1,251 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset238 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang7 /*\par
+1. feladat (2 pont)\par
+    Melyik \'e9vben nyerte el egy orsz\'e1g legkor\'e1bban a f\'fcggetlens\'e9g\'e9t?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja azt az \'e9vsz\'e1mot, amikor az els\f1\'f5 orsz\f0\'e1g f\'fcggetlen lett! (IndepYear)\par
+    Elv\'e1rt eredm\'e9ny:\par
+        -1523\par
+*/\par
+SELECT MIN(`IndepYear`) FROM `country`;\par
+\par
+/*\par
+2. feladat (4 pont)\par
+    \'c9s melyik az az orsz\'e1g, amely legkor\'e1bban nyerte el a f\'fcggetlens\'e9g\'e9t?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja annak az orsz\'e1gnak az \'f6sszes adat\'e1t, amelyik legkor\'e1bban nyerte el a f\'fcggetlens\'e9g\'e9t!\par
+    A feladatot egy lek\'e9rdez\'e9sben oldd meg! Azaz nem elfogadhat\'f3, ha el\f1\'f5sz\f0\'f6r lek\'e9rdezed a legkor\'e1bbi f\'fcggetlens\'e9g \'e9vsz\'e1m\'e1t,\par
+    azt kim\'e1solod, \'e9s beilleszted a lek\'e9rdez\'e9sbe.\par
+    Elv\'e1rt eredm\'e9ny:\par
+        CHN Code-\'fa orsz\'e1g (China)\par
+*/\par
+SELECT `Name`,`Code` FROM `country` WHERE `IndepYear`=-1523;\par
+/*\par
+3. feladat (2 pont)\par
+    Melyek azok a v\'e1rosok, amelyekn\'e9l a v\'e1ros neve ugyanaz, mint a k\'f6rzet\'e9?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja a v\'e1rosok \'f6sszes adat\'e1t, amelyekn\'e9l a n\'e9v megegyezik a k\'f6rzet nev\'e9vel! (District)\par
+    Elv\'e1rt eredm\'e9ny:\par
+        550 rekord\par
+        ID szerint n\'f6vekv\f1\'f5 sorrendben az els\'f5 5 darab: 2, 3, 8, 11, 34\par
+        ID szerint n\f0\'f6vekv\f1\'f5 sorrendben az utols\f0\'f3 3 darab: 4076, 4078, 4079\par
+*/\par
+SELECT * FROM `city` WHERE city.`District`=city.`Name` ORDER BY city.`ID`;\par
+\par
+/*\par
+4. feladat (3 pont)\par
+    Mely orsz\'e1gokn\'e1l tartalmazza az \'e1llamf\f1\'f5 neve az 'Ahmad', az 'Ahmed' vagy a 'Hamad' szavakat?\par
+    \f0\'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1g nev\'e9t \'e9s az \'e1llamf\f1\'f5 nev\f0\'e9t, amennyiben az \'e1llamf\f1\'f5 neve tartalmazza\par
+    a fent le\f0\'edrt szavak b\'e1rmelyik\'e9t! (HeadOfState)\par
+    Elv\'e1rt eredm\'e9ny:\par
+        7 rekord\par
+        orsz\'e1gnevek: Bangladesh, Bahrain, Kuwait, Mauritania, Qatar, Sudan, Sierra Leone\par
+*/\par
+SELECT `Name`,`HeadOfState` FROM `country` WHERE `HeadOfState` LIKE '%Ahmad%' OR `HeadOfState` LIKE 'Ahmad' OR `HeadOfState` LIKE '%Ahmad' OR `HeadOfState` LIKE 'Ahmad%' OR `HeadOfState` LIKE 'Ahmed' OR `HeadOfState` LIKE '%Ahmed%'OR `HeadOfState` LIKE 'Ahmed%' OR `HeadOfState` LIKE '%Ahmed' OR `HeadOfState` LIKE '%Hamad%' OR `HeadOfState` LIKE 'Hamad%' OR `HeadOfState` LIKE '%Hamad' OR `HeadOfState` LIKE 'Hamad';\par
+\par
+\par
+/*\par
+5. feladat (3 pont)\par
+    Melyek azok az orsz\'e1gok, amelyekn\'e9l nincs megadva v\'e1rhat\'f3 \'e9letkor, de van lakoss\'e1guk?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja azoknak az orsz\'e1goknak az \'f6sszes adat\'e1t, ahol nem szerepel v\'e1rhat\'f3 \'e9letkor (LifeExpectancy),\par
+    de nem lakatlanok.\par
+    Elv\'e1rt eredm\'e9ny:\par
+        10 rekord\par
+        kontinensek: Oceania (7 db), Europe (2), South America (1)\par
+*/\par
+\par
+SELECT `Continent`, COUNT(`Continent`) FROM `country` WHERE `LifeExpectancy` IS NULL AND `Population`>0 GROUP BY `Continent`;\par
+\par
+SELECT `Continent`, COUNT(`Continent`) AS COUNT FROM `country` WHERE `LifeExpectancy` IS NULL AND `Population`>0 GROUP BY `Continent`;\par
+/*\par
+6. feladat (2 pont)\par
+    Mely orsz\'e1gokn\'e1l nagyobb a GNPOld a GNP-n\'e9l?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1g k\'f3dj\'e1t, nev\'e9t, a GNP-t \'e9s a GNPOld-ot azokr\'f3l az orsz\'e1gokr\'f3l,\par
+    ahol a GNPOld nagyobb, mint a GNP!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        63 rekord\par
+*/\par
+SELECT `Code`,`Name`,`GNP`,`GNPOld` FROM `country` WHERE `GNPOld`>`GNP`;\par
+\par
+\par
+/*\par
+7. feladat (4 pont)\par
+    Mely nyelvek neve v\'e9gz\f1\'f5dik \f0\'fagy, hogy 'ian'?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja a nyelvek nev\'e9t, ahol a n\'e9v 'ian'-ra v\'e9gz\f1\'f5dik!\par
+    Mindegyik nyelv csak egyszer szerepeljen a tal\f0\'e1latok k\'f6z\'f6tt, \'e9s rendezd \f1\'f5ket n\f0\'e9v szerint ABC-sorrendbe!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        29 rekord\par
+SELECT `Language` FROM `countrylanguage` WHERE `Language` LIKE '%ian' GROUP BY `Language` ORDER BY `Language`;\par
+*/\par
+\par
+\par
+/*\par
+8. feladat (4 pont)\par
+    H\'e1ny darab orsz\'e1g szerepel az adatb\'e1zisban a k\'fcl\'f6nb\'f6z\f1\'f5 eur\f0\'f3pai r\'e9gi\'f3kban?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja a r\'e9gi\'f3t \'e9s a r\'e9gi\'f3ban tal\'e1lhat\'f3 orsz\'e1gok darabsz\'e1m\'e1t,\par
+    ahol a r\'e9gi\'f3ban szerepel az, hogy 'Europe'!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        Southern Europe: 15\par
+        Western Europe: 9\par
+        Eastern Europe 10\par
+*/\par
+\par
+SELECT `Region`, COUNT(*) as DARABSZAM FROM `country` WHERE `Region` LIKE '%Europe%' GROUP BY `Region` ORDER BY DARABSZAM;\par
+/*\par
+9. feladat (5 pont)\par
+    Melyek az orsz\'e1gok f\f1\'f5v\f0\'e1rosai?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1g k\'f3dj\'e1t, nev\'e9t \'e9s a f\f1\'f5v\f0\'e1ros\'e1nak a nev\'e9t,\par
+    m\'e9ghozz\'e1 az orsz\'e1g neve szerint ABC-sorrendben!\par
+    A tal\'e1lati list\'e1ban minden orsz\'e1g szerepeljen - m\'e9g akkor is, ha nincsen f\f1\'f5v\f0\'e1rosa.\par
+    Elv\'e1rt eredm\'e9ny:\par
+        239 rekord\par
+        els\f1\'f5 orsz\f0\'e1gk\'f3d: AFG\par
+        utols\'f3 orsz\'e1gk\'f3d: ZWE\par
+*/\par
+SELECT `country`.`Code`,`country`.`Name`, `city`.`Name` AS CAPITAL_CITY FROM `country` LEFT JOIN `city` ON `city`.`CountryCode` = `country`.`Code` GROUP BY `country`.`Code` ORDER BY `country`.`Name`;\par
+\par
+/*\par
+10. feladat (3 pont)\par
+    Melyek azok a v\'e1rosok, amelyekn\'e9l a popul\'e1ci\'f3 sz\'e1ma pontosan 3 sz\'e1mjegyb\f1\'f5l \f0\'e1ll?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja azoknak a v\'e1rosoknak az \'f6sszes adat\'e1t, amelyekn\'e9l a lakoss\'e1g sz\'e1ma pontosan 3 sz\'e1mjegyb\f1\'f5l \f0\'e1ll!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        10 rekord\par
+        a v\'e1rosok ID-ja: 61, 62, 1791, 2316, 2317, 2728, 2805, 2806, 3333, 3538\par
+*/\par
+SELECT * FROM `city` WHERE `city`.`Population` LIKE '___';\par
+\par
+/*\par
+11. feladat (5 pont)\par
+    Mely v\'e1rosok tartoznak olyan orsz\'e1gokhoz, amelyek a 'Nordic Countries' r\'e9gi\'f3ban tal\'e1lhat\'f3ak?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja azoknak a v\'e1rosoknak az \'f6sszes adat\'e1t,\par
+    amelyek valamilyen 'Nordic Countries' r\'e9gi\'f3hoz tartoz\'f3 orsz\'e1gban vannak,\par
+    m\'e9ghozz\'e1 orsz\'e1gk\'f3d szerint ABC-sorrendben (n\'f6vekv\f1\'f5), popul\f0\'e1ci\'f3 szerint cs\'f6kken\f1\'f5 sorrendben!\par
+    Elv\f0\'e1rt eredm\'e9ny:\par
+        35 rekord\par
+        orsz\'e1gk\'f3dok, amelyek szerepelnek a list\'e1ban: DNK, FIN, FRO, ISL, NOR, SJM, SWE\par
+*/\par
+SELECT * FROM `city` LEFT JOIN `country` ON `city`.`CountryCode`=`country`.`Code` WHERE `country`.`Region` LIKE 'Nordic Countries';\par
+\par
+/*\par
+12. feladat (5 pont)\par
+    H\'e1ny orsz\'e1g tal\'e1lhat\'f3 a k\'fcl\'f6nb\'f6z\f1\'f5 r\f0\'e9gi\'f3kban, amelyek id\f1\'f5sz\f0\'e1m\'edt\'e1sunk szerint 1500 el\f1\'f5tt nyert\f0\'e9k el a f\'fcggetlens\'e9g\'fcket,\par
+    vagy mindig is f\'fcggetlenek voltak?\par
+    \'cdrj lek\'e9rdez\'e9s, amely visszaadja a r\'e9gi\'f3t \'e9s a r\'e9gi\'f3hoz tartoz\'f3 azon orsz\'e1gok darabsz\'e1m\'e1t, amelyekre igaz,\par
+    hogy nincs \'e9rt\'e9k megadva az `IndepYear`-n\'e9l, vagy 1500 el\f1\'f5tt nyert\f0\'e9k el a f\'fcggetlens\'e9g\'fcket!\par
+    A tal\'e1latokat rendezd a darabsz\'e1m szerint cs\'f6kken\f1\'f5 sorrendbe!\par
+    Elv\f0\'e1rt eredm\'e9ny:\par
+        19 rekord\par
+        legkisebb: Northern Africa (1)\par
+        legnagyobb: Caribbean (11)\par
+SELECT `country`.`Region`, COUNT(*) AS DARABSZAM FROM `country` WHERE `country`.`IndepYear`<1500 OR `country`.`IndepYear` IS NULL GROUP BY `country`.`Region` ORDER BY DARABSZAM;\par
+*/\par
+\par
+\par
+/*\par
+13. feladat (6 pont)\par
+    Melyek azok az orsz\'e1gok, amelyekben nem hivatalos nyelvk\'e9nt besz\'e9lik az angolt?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1gok \'f6sszes adat\'e1t, amelyekben az angol nem hivatalos nyelv!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        16 rekord\par
+        orsz\'e1gk\'f3dok: ABW, ANT, BHR, BRN, COK, DNK, ISL, JPN, KWT, MAC, MCO, MDV, MYS, NOR, PRI, TTO\par
+*/\par
+SELECT country.Name, countrylanguage.CountryCode FROM country INNER JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE countrylanguage.Language = "English" AND countrylanguage.IsOfficial = 'F';\par
+\par
+/*\par
+14. feladat (6 pont)\par
+    Mely orsz\'e1gokhoz nem tartozik egy v\'e1ros sem?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja azoknak az orsz\'e1goknak az \'f6sszes adat\'e1t, amelyekhez nem tartozik v\'e1ros az adatb\'e1zisban!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        7 rekord\par
+        orsz\'e1gk\'f3dok: ATA, ATF, BVT, HMD, IOT, SGS, UMI\par
+*/\par
+SELECT country.Name, country.Code FROM country LEFT JOIN city ON country.Code = city.CountryCode WHERE city.Name IS NULL;\par
+\par
+/*\par
+15. feladat (6 pont)\par
+    Melyik orsz\'e1gokhoz tartozik nyelv, ahol a nyelvet a lakoss\'e1g 0%-a besz\'e9li?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1g nev\'e9t, kontinens\'e9t, r\'e9gi\'f3j\'e1t, a nyelv nev\'e9t \'e9s sz\'e1zal\'e9k\'e1t, amelyre igaz,\par
+    hogy a nyelv sz\'e1zal\'e9ka 0!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        65 rekord\par
+*/\par
+SELECT country.Name, country.Code FROM country INNER JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE countrylanguage.Percentage = 0;\par
+\par
+\par
+-- ---------------------------------------------------------------------------------------------------------------------\par
+\par
+/*\par
+B\'f3nusz feladatok\par
+*/\par
+\par
+/*\par
+b\'f3nusz 1. (4 pont)\par
+    Melyek azok az orsz\'e1gok, amelyek k\'e9tbet\f1\'fbs orsz\f0\'e1gk\'f3dja nem a h\'e1rombet\f1\'fbs orsz\f0\'e1gk\'f3d els\f1\'f5 k\f0\'e9t bet\f1\'fbje?\par
+    \f0\'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1g h\'e1rombet\f1\'fbs k\f0\'f3dj\'e1t, k\'e9tbet\f1\'fbs k\f0\'f3dj\'e1t \'e9s nev\'e9t,\par
+    ahol a h\'e1rombet\f1\'fbs orsz\f0\'e1gk\'f3d els\f1\'f5 k\f0\'e9t bet\f1\'fbje nem azonos a k\f0\'e9tbet\f1\'fbs k\f0\'f3ddal!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        88 rekord\par
+*/\par
+SELECT country.Name, country.Code, country.Code2 FROM country WHERE country.Code NOT LIKE CONCAT(country.Code2, '%');\par
+\par
+\par
+/*\par
+b\'f3nusz 2. (4 pont)\par
+    Mely v\'e1rosok tartoznak ahhoz az orsz\'e1ghoz, amelyik legel\f1\'f5bb nyerte el a f\f0\'fcggetlens\'e9g\'e9t?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja azoknak a v\'e1rosoknak az \'f6sszes adat\'e1t,\par
+    amelyek a legkor\'e1bban f\'fcggetlenn\'e9 v\'e1lt orsz\'e1ghoz tartoznak!\par
+    A feladatot egy lek\'e9rdez\'e9sben oldd meg! Azaz nem elfogadhat\'f3, ha el\f1\'f5sz\f0\'f6r lek\'e9rdezed az orsz\'e1gk\'f3dot,\par
+    az kim\'e1solod, \'e9s beleilleszted a lek\'e9rdez\'e9sbe.\par
+    Elv\'e1rt eredm\'e9ny:\par
+        363 rekord\par
+*/\par
+SELECT city.Name FROM country INNER JOIN city On city.CountryCode = country.Code WHERE country.Code = (SELECT country.Code FROM country WHERE country.IndepYear IS NOT NULL ORDER BY country.IndepYear LIMIT 1);\par
+\par
+\par
+/*\par
+b\'f3nusz 3. (4 pont)\par
+    Mekkora a sz\'e1zal\'e9ka a legnagyobb sz\'e1zal\'e9kban besz\'e9lt nyelveknek orsz\'e1gonk\'e9nt?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1gk\'f3dot \'e9s az orsz\'e1gban a legnagyobb sz\'e1zal\'e9kban besz\'e9lt nyelv sz\'e1zal\'e9k\'e1t!\par
+    A feladatot egy lek\'e9rdez\'e9sben oldd meg!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        233 rekord\par
+        n\'e9h\'e1ny p\'e9lda:\par
+            ABW 76.7\par
+            AFG 52.4\par
+            AGO 37.2\par
+            AIA 0.0\par
+*/\par
+SELECT country.Name, country.Code, MAX(countrylanguage.Percentage) FROM countrylanguage INNER JOIN country ON country.Code = countrylanguage.CountryCode GROUP BY country.Code, country.Name;\par
+\par
+\par
+/*\par
+b\'f3nusz 4. (6 pont)\par
+    Melyik nyelvet besz\'e9lik a legnagyobb sz\'e1zal\'e9kban orsz\'e1gonk\'e9nt?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1gk\'f3dot, a nyelvet \'e9s a sz\'e1zal\'e9kot,\par
+    m\'e9ghozz\'e1 orsz\'e1gonk\'e9nt kiv\'e1lasztva a legnagyobb sz\'e1zal\'e9kban besz\'e9lt nyelvet!\par
+    A feladatot egy lek\'e9rdez\'e9sben oldd meg!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        241 rekord (n\'e9h\'e1ny orsz\'e1gban holtverseny van - ez\'e9rt lesz itt t\'f6bb tal\'e1lat, mint a b\'f3nusz 3. feladatn\'e1l)\par
+        n\'e9h\'e1ny p\'e9lda:\par
+            ABW, Papiamento, 76.7\par
+            AFG, Pashto, 52.4\par
+            AGO, Ovimbundu, 37.2\par
+            AIA, English, 0.0\par
+*/\par
+\par
+\par
+/*\par
+b\'f3nusz 5. (6 pont)\par
+    H\'e1ny hivatalos \'e9s nem hivatalos nyelv tartozik a k\'fcl\'f6nb\'f6z\f1\'f5 orsz\f0\'e1gokhoz?\par
+    \'cdrj lek\'e9rdez\'e9st, amely visszaadja az orsz\'e1gk\'f3dot, a hozz\'e1 tartoz\'f3 hivatalos nyelvek darabsz\'e1m\'e1t\par
+    \'e9s a nem hivatalos nyelvek darabsz\'e1m\'e1t!\par
+    Elv\'e1rt eredm\'e9ny:\par
+        233 rekord\par
+        n\'e9h\'e1ny p\'e9lda:\par
+            ABW, hivatalos: 1, nem hivatalos: 3\par
+            AFG, hivatalos: 2, nem hivatalos: 3\par
+            AGO, hivatalos: 0, nem hivatalos: 9\par
+            AIA, hivatalos: 1, nem hivatalos: 0\par
+*/\par
+\par
+SELECT country.Code, IsOfficial, COUNT(*) FROM country INNER JOIN countrylanguage ON countrylanguage.CountryCode = country.Code GROUP BY country.Code, IsOfficial;\par
+}
+ 
